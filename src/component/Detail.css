@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.movie-area{
+    margin-top: 80px;
+    position: absolute;
+    display: flex;
+    height: calc(100% - 130px);
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.movie-img{
+    height: 500px;
+    
+    margin-right: 80px;
+}
+
+.movie-details {
+    color: white;
+    width: 420px;
+}
+
+.movie-details > *{
+    margin-bottom: 20px;
+}
+
+.vote{
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+}
+
+.vote-title{
+    margin-right: 10px;
+    white-space: nowrap;
+    
+}
+
