@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Spinner from '/src/assets/Spinner1.gif';
 
 const useMovieData = (url) => {
   const [movieData, setMovieData] = useState(null);
 
   useEffect(() => {
     const fetchMovieData = async () => {
+      if (!url) return;
+
       try {
         const response = await axios.get(url, {
           params: { language: 'en-US', page: '1' },
@@ -16,6 +17,7 @@ const useMovieData = (url) => {
           }
         }); 
         setMovieData(response.data.results);
+        
       
       } catch (error) {
         console.error(error);
