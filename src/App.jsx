@@ -11,6 +11,7 @@ import Detailpage from './component/Detailpage';
 import SignUpPage from './component/SignUpPage';
 import NotFoundPage from './component/NotFoundPage';
 import styled from 'styled-components';
+import LoginPage from './component/LoginPage';
 
 const AppContainer = styled.div`
   display: flex;
@@ -38,8 +39,9 @@ function App() {
           <Route path="/popular" element={<Popular/>}></Route>
           <Route path="/toprated" element={<TopRated/>}></Route>
           <Route path="/upcoming" element={<Upcoming/>}></Route>
-          <Route path='/detail/:title' element={<Detailpage/>}></Route>
+          <Route path='/movie/:id' element={<Detailpage/>}></Route>
           <Route path='/signup' element={<SignUpPage/>}></Route>
+          <Route path='/login' element={<LoginPage/>}></Route>
           <Route path="*" element={<NotFoundPage/>}></Route>
         </Routes>
       </MainContent>

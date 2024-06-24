@@ -7,7 +7,7 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   box-sizing: border-box;
-  height: 80px;
+  height: 10vh;
   padding: 0 20px;
   align-items: center;
   background-color: #171B39;
@@ -49,7 +49,7 @@ const Header = () => {
   }
 
   const menuItems = [
-    { name: 'Sign Up', path: '/signup', handler: goSignUpPage },
+    { name: 'Login', path: '/login' },
     { name: 'Popular', path: '/popular' },
     { name: 'Top Rated', path: '/toprated' },
     { name: 'Now Playing', path: '/nowplaying' },
@@ -62,7 +62,7 @@ const Header = () => {
         <Title className='' onClick={()=>handleNavigation('/')}>UMC Movie</Title>
         <Menu>
           {menuItems.map((item) => (
-            <div key={item.name} onClick={() => item.handler ? item.handler() : handleNavigation(item.path)}>
+            <div key={item.name} onClick={() => handleNavigation(item.path)}>
               {item.name}
             </div>
           ))}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const useMovieData = (url) => {
+const useMovieData = (url, movieId = null ) => {
   const [movieData, setMovieData] = useState(null);
 
   useEffect(() => {
@@ -9,23 +9,29 @@ const useMovieData = (url) => {
       if (!url) return;
 
       try {
-        const response = await axios.get(url, {
+        const endpoint = movieId ? `${url}/${movieId}` : url;
+        const response = await axios.get(endpoint, {
           params: { language: 'en-US', page: '1' },
           headers: {
             accept: 'application/json',
             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjNmFmOGQ5ZjZhOWQ3YzRhYmQ0ODA4N2I1OTQyNTY0ZSIsInN1YiI6IjY2NDJmMThhMjJjMzFjZjI0MTZhYTEzMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UbujFtNvKpQ1kmOfSSyGvVbIeh-XAJ2CFpGSK148STQ'
           }
-        }); 
-        setMovieData(response.data.results);
+        });
+        const data = response.data;
+
+        if(data.results){
+          setMovieData(data.results);
+        } else {
+          setMovieData(data);
+        }
         
-      
       } catch (error) {
         console.error(error);
       }
     };
     
     fetchMovieData();
-  }, [url]); 
+  }, [url, movieId]); 
 
   return movieData;
 };

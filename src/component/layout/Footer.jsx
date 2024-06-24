@@ -6,7 +6,7 @@ const FooterContainer = styled.div`
   bottom: 0px;
   left: 0px;
   width: 100%;
-  height: 50px;
+  height: 6vh;
   background-color: #171B39;
 `
 
