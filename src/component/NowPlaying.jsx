@@ -2,6 +2,9 @@ import React from 'react'
 import useMovieData from './customhook/useMovieData';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useState } from 'react';
+import Loading from './customhook/Loading';
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 
 const BodyContainer = styled.div`
   display: flex;
@@ -32,15 +35,48 @@ const MovieCard = styled.div`
   }
 `
 
+const PageArea = styled.div`
+  display: flex;
+  margin-bottom: 10vh;
+  align-items: center;
+  justify-content: center;
+`
+
+const Page = styled.div`
+  color: white;
+  margin: 0 10px;
+  display: inline-block;
+  width: 10px;
+`
+
 const NowPlaying = () => {
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [page, setPage] = useState(1);
   const BASE_URL = "https://image.tmdb.org/t/p/w500/";
-  const movieData = useMovieData('https://api.themoviedb.org/3/movie/now_playing')
+  const { movieData, loading } = useMovieData('https://api.themoviedb.org/3/movie/now_playing');
+
   const goDetailPage = (movie) => {
     navigate(`/movie/${movie.id}`, {
     })
   }
+
+  const goNextPage = () => {
+    setPage(page + 1);
+  }
+
+  const goPrevPage = () => {
+    if(page > 1){
+      setPage(page - 1);
+    }
+  }
+
+  if (loading) {
+    return (
+      <Loading/>
+    )
+  }
+
   return (
     <BodyContainer>
       <MovieContainer>
@@ -54,6 +90,21 @@ const NowPlaying = () => {
           </MovieCard>
         ))}
       </MovieContainer>
+      <PageArea>
+        <MdArrowBackIos 
+          onClick={goPrevPage} 
+          size={24} 
+          color={page === 1 ? 'gray' : 'white'} 
+          style={{ cursor: page === 1 ? 'not-allowed' : 'pointer'}}
+        />
+        <Page>{page}</Page>
+        <MdArrowForwardIos 
+          onClick={goNextPage} 
+          size={24} 
+          color='white' 
+          style={{ cursor: 'pointer'}}
+        />
+    </PageArea>
     </BodyContainer>
   )
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useMovieData from './customhook/useMovieData';
+import Loading from './customhook/Loading';
 
 const VoteStar = styled.h3`
   display: grid;
@@ -82,13 +83,19 @@ const Name = styled.h5`
 const Detailpage = () => {
 
   const { id } = useParams();
-  const movieData = useMovieData('https://api.themoviedb.org/3/movie', id);
-  const movieData1 = useMovieData(`https://api.themoviedb.org/3/movie/${id}/credits`);
+  const { movieData, loading } = useMovieData('https://api.themoviedb.org/3/movie', id);
+  const { movieData: movieData1, loading: loading1 }= useMovieData(`https://api.themoviedb.org/3/movie/${id}/credits`);
   console.log(movieData1)
   const BASE_URL = "https://image.tmdb.org/t/p/w500/";
   const BASE_PROFILE_URL ="https://image.tmdb.org/t/p/w200/"
   const NO_IMAGE_URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz7ztleRwzXhFdiwBYqZ8cib9RvEsukVVUS3niN1YQ&s";
   
+  if (loading || loading1) {
+    return (
+      <Loading/>
+    )
+  }
+
   if (!movieData) {
     return <div>No Moives</div>
   }
