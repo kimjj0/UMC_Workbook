@@ -1,3 +1,4 @@
+
 import React from 'react'
 import useMovieData from './customhook/useMovieData';
 import Loading from './customhook/Loading';

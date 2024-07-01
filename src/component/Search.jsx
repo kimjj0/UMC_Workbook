@@ -69,8 +69,7 @@ const MovieCard = styled.div`
 const Search = () => {
   const [query, setQuery] = useState('');
   const [url, setUrl] = useState('');
-  const [isLoading, setIsLoading] = useState('');
-  const movieData = useMovieData(url);
+  const {movieData, loading} = useMovieData(url);
   const debouncedQuery = useDebounce(query, 500);
 
   const navigate = useNavigate();
@@ -78,32 +77,24 @@ const Search = () => {
   const goDetailPage = (movie) => {
     navigate(`/movie/${movie.id}`, {
       state: movie
-    })
+    });
   }
 
   const BASE_URL = "https://image.tmdb.org/t/p/w500/";
 
   const handleSearch = (e) => {
     setQuery(e.target.value);
-    e.target.value === '' && setIsLoading(false) && setUrl('') && setQuery('');
+    e.target.value === '' && setUrl('') && setQuery('');
   };
 
   useEffect(() => {
     if(debouncedQuery){
-      setIsLoading(true);
-      query === '' && movieData == []
       const searchUrl = `https://api.themoviedb.org/3/search/movie?query=${query}`;
       setUrl(searchUrl);
-    } else {
-      setIsLoading(false);
+    }else{
+      setUrl('');
     }
   }, [debouncedQuery]);
-
-  useEffect(() => {
-    if (movieData) {
-      setIsLoading(false);
-    }
-  }, [movieData]);
 
   return (
     <SearchSection>
@@ -120,7 +111,7 @@ const Search = () => {
         </span>
       </InputSection>
       
-      {isLoading ? (
+      {query && loading ? (
         <div>데이터를 받아오는 중입니다..</div>
       ) : (
         movieData && movieData.length > 0 && (
